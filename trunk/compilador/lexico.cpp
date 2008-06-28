@@ -23,7 +23,7 @@ lexico::~lexico()
 {
 }
 
-void lexico::analisador(std::string filename){
+void lexico::analisador_lexico(std::string filename){
 	std::string token;
 	char buffer;
 	int linha = 1;
