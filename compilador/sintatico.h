@@ -6,6 +6,8 @@ class sintatico
 public:
 	sintatico();
 	virtual ~sintatico();
+	
+	void analisador_sintatico();
 };
 
 #endif /*SINTATICO_H_*/

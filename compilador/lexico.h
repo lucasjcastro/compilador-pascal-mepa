@@ -34,7 +34,7 @@ public:
 	lexico();
 	virtual ~lexico();
 	
-	void analisador(std::string);
+	void analisador_lexico(std::string);
 	int ischar(char);
 	int isnum(char);
 	int isspecchar(char);

@@ -8,7 +8,7 @@ int main(int argc, char* argv[]){
 
 
 	lexico comp;
-	comp.analisador(filename);
+	comp.analisador_lexico(filename);
 	comp.printerror();
 	comp.printlist();
 	comp.printtype();
