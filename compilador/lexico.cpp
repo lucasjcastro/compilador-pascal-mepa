@@ -334,3 +334,8 @@ void lexico::printtype(){
 		itr++;
 	}
 }
+
+
+std::list<tokentype> * lexico::getLista(){
+   return &lista;
+}

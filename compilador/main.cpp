@@ -3,6 +3,7 @@
 #include <string>
 #include "lexico.h"
 #include "hash.h"
+//#include "sintatico.h"
 
 int main(int argc, char* argv[]){
 	///TESTE DE HASH DAQUI...
@@ -31,9 +32,14 @@ int main(int argc, char* argv[]){
     std::string filename = argv[1];
     
 	lexico comp;
+	sintatico testoe;
+	
 	comp.analisador_lexico(filename);
-	comp.printerror();
-	comp.printlist();
-	comp.printtype();
+	//comp.printerror();
+	//comp.printlist();
+	//comp.printtype();
+	testoe = new lista(comp.getLista());
+	testoe.analisador_sintatico();
+	
 	return 0;
 }
