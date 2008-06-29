@@ -1,3 +1,44 @@
+/*
+ * Esta biblioteca consta de:
+ * 
+ * - CLASSE HASHCELL -
+ *  
+ * hashCell(string id, string cat); -> Construtor que inicializa a célula da tabela Hash. Recebe como
+ *                                  parâmetros o identificador e sua categoria. 
+ * 
+ * Funções 'get[atributo]';  -> Retornam o atributo em questão (formalismo de encapsulamento).
+ * 
+ * Funções 'set[atributo]';  -> Inserem um valor no atributo (formalismo de encapsulamento). 
+ * 
+ *
+ * - Categorias de um identificador -
+ *
+ * # variavel
+ * 
+ * # parametro
+ *
+ * # procedimento
+ *
+ * ////////////////////////////////////////////////////////////////////////////////////////
+ * 
+ *  - CLASSE HASH -
+ * 
+ * int getHashNumba(string palavra);  -> É a função hash em si. Recebe o identificador e retorna o 
+ *                                    número hash correspondente.  
+ * 
+ * void setHash(string palavra, string categoria);  -> Inicializa uma célula hash. Recebe o identificador
+ *                                                  e a categoria. Cria-se uma célula hash e esta é alocada  
+ *                                                  na tabela com os atributos já disponíveis.  
+ * 
+ * int checkHash(string palavra);  -> Retorna '1' caso o identificador em questão já esteja na tabela, e '0' no
+ *                                 caso contrário.
+ *
+ * Funções 'get[atributo]';  -> Retornam o valor do atributo em questão.
+ *
+ * Funções 'set[atributo]';  -> Inserem um valor no atributo em questão.
+ *
+ */
+
 #ifndef HASH_H_
 #define HASH_H_
 #include <iostream>
@@ -30,7 +71,7 @@ class hashCell{
       private:
                   
          string identificador;
-         string categoria;   //Categorias 'variavel', 'parametro' ou 'procedimento'
+         string categoria;   
          int nivel;
           
          //CHECAR
@@ -48,7 +89,8 @@ class hash{
          hash();
          
          int getHashNumba(string palavra);
-         void setHash(string palavra, string categoria);     //1. Variável simples, 2. Parâmetro formal, 3. Procedimento  
+         void setHash(string palavra, string categoria);     
+         int checkHash(string palavra);
                   
          string getCategoria(string palavra);
          int getNivel(string palavra);

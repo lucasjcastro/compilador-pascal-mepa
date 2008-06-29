@@ -139,8 +139,7 @@ int hash::getHashNumba(string palavra){
 
 void hash::setHash(string palavra, string categoria){
    hashCell *insert;
-   int hashId=0,
-       i=0;
+   int hashId=0;
        
    insert = new hashCell(palavra, categoria);
    
@@ -149,6 +148,26 @@ void hash::setHash(string palavra, string categoria){
       
    insert->next = hashTable[hashId];
    hashTable[hashId] = insert;      
+};
+
+////////////////////////////////////////////////////////
+
+int hash::checkHash(string palavra){
+   hashCell *check;
+   int hashId=0;
+      
+   // Conseguir id da Hash   
+   hashId = getHashNumba(palavra);  
+      
+   check = hashTable[hashId];
+   while(check!=NULL){
+      if (check->identificador == palavra){
+         return 1;
+      }else{
+         check = check->next;
+      }
+   }   
+   return 0;      
 };
 
 ////////////////////////////////////////////////////////
