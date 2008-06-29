@@ -161,11 +161,8 @@ int hash::checkHash(string palavra){
       
    check = hashTable[hashId];
    while(check!=NULL){
-      if (check->identificador == palavra){
-         return 1;
-      }else{
-         check = check->next;
-      }
+      if (check->getIdentificador() == palavra){return 1;}
+      else{check = check->next;}
    }   
    return 0;      
 };
