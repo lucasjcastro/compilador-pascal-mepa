@@ -1,21 +1,26 @@
 #include <iostream>
+#include <list>
 #include "sintatico.h"
+#include "tokentype.h"
 
 using namespace std;
 
-sintatico::sintatico(std::list<tokentype> loadUp)
+sintatico::sintatico()
 {
-   lista = loadUp;
-}
+};
 
 sintatico::~sintatico()
 {                      
-}
+};
+
+void sintatico::loadList(std::list<tokentype> loadUp){
+   lista = &loadUp;
+};
 
 
 void sintatico::analisador_sintatico(){
-   
-   
-   cout << "Under construction. Keep out, MO-FOS!" << endl;
+      
+   std::cout << "Under construction. Keep out, MO-FOS!" << std::endl << std::endl;
    system("pause");	
+   
 };

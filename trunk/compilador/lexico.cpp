@@ -336,6 +336,6 @@ void lexico::printtype(){
 }
 
 
-std::list<tokentype> * lexico::getLista(){
-   return &lista;
+std::list<tokentype> lexico::getLista(){
+   return lista;
 }

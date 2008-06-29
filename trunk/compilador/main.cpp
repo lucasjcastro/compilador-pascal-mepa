@@ -3,11 +3,12 @@
 #include <string>
 #include "lexico.h"
 #include "hash.h"
-//#include "sintatico.h"
+#include "sintatico.h"
+#include "arvore.h"
 
 int main(int argc, char* argv[]){
 	///TESTE DE HASH DAQUI...
-    hash testoe;
+    /*hash testoe;
     string palavra1, 
            palavra2, 
            palavra3, 
@@ -25,21 +26,21 @@ int main(int argc, char* argv[]){
     resultado = testoe.getCategoria(palavra1);
     
     cout << "Resultado da busca por " << palavra1 << " deu " << resultado << endl;    
-    system("pause");    
+    system("pause"); */   
 
 
     /// ATÉ AQUI.
     std::string filename = argv[1];
     
 	lexico comp;
-	sintatico testoe;
+	sintatico run;
 	
 	comp.analisador_lexico(filename);
 	//comp.printerror();
 	//comp.printlist();
 	//comp.printtype();
-	testoe = new lista(comp.getLista());
-	testoe.analisador_sintatico();
+	run.loadList(comp.getLista());
+	run.analisador_sintatico();
 	
 	return 0;
 }
