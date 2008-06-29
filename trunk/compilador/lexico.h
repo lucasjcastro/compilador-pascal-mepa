@@ -46,6 +46,8 @@ public:
 	void printerror();
 	void printtype();
 	
+	std::list<tokentype> * getLista();
+	
 private:
 	std::list<tokentype> lista;
 };
