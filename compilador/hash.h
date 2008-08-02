@@ -19,6 +19,8 @@
  *
  * # procedimento
  *
+ * # funcao
+ *
  * ////////////////////////////////////////////////////////////////////////////////////////
  * 
  *  - CLASSE HASH -
@@ -88,9 +90,10 @@ class hash{
       public:
          hash();
          
+         void setHash(string palavra, string categoria);        // inserir identificador
+         
          int getHashNumba(string palavra);
-         void setHash(string palavra, string categoria);     
-         int checkHash(string palavra);
+         int checkHash(string palavra, string categoria);
                   
          string getCategoria(string palavra);
          int getNivel(string palavra);
