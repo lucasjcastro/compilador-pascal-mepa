@@ -33,7 +33,7 @@ void sintatico::pushPop(){
 
 ////////////////////////////////////////////////////////////////////////////////
 
-//  obs.: o comando "pushPop()" servem para passar para a próxima palavra 
+//  obs.: o comando "pushPop()" serve para passar para a próxima palavra 
 // da lista recebida do léxico.
 
 void sintatico::analisador_sintatico(){
@@ -50,12 +50,11 @@ void sintatico::analisador_sintatico(){
             carvalho.listaIdentificadores = ASlistaIdentificadores();
             if(erro){
                // [check] imprimir erro, interromper programa
-            }else{                  
-               pushPop();
+            }else{
                if(roller.nome == ")"){                  
                   pushPop();                  
                   if(roller.nome == ";"){                  
-                     carvalho.listaIdentificadores = ASbloco();
+                     carvalho.bloco = ASbloco();
                      if(erro){
                         // [check] imprimir erro, interromper programa
                      }else{
@@ -64,7 +63,7 @@ void sintatico::analisador_sintatico(){
                   }else{
                      // [check] imprimir erro, interromper programa
                   }
-               }else
+               }else{
                   // [check] imprimir erro, interromper programa
                }
             }
@@ -130,19 +129,65 @@ listaIdentificadores* sintatico::ASlistaIdentificadores(){
 
 ////////////////////////////////////////////////////////////////////////////////
 
-bloco* ASbloco(){
+bloco* sintatico::ASbloco(){
 
    bloco *tempNode;
 
    pushPop();
    tempNode->rotulos = ASdeclaraRotulos();
-   tempNode->defineTipos = ASdefineTipos();
+   /*tempNode->defineTipos = ASdefineTipos();
    tempNode->variaveis = ASdeclaraVariaveis();
    tempNode->subrotinas = ASdeclaraSubrotinas();
    tempNode->comandoComposto = AScomandoComposto();   
+   */
    if(erro){
       // [check] providencias de erro serão tomadas no método que chamou este.
    }   
    return tempNode;   
 };
+
+////////////////////////////////////////////////////////////////////////////////
+
+declaraRotulos* sintatico::ASdeclaraRotulos(){
+                
+   declaraRotulos *tempNode, *listaScroller;
+   int aux;
+   
+   if(roller.nome == "label"){
+      pushPop();
+      if(roller.tipo == 2){
+                     
+         //Consertar linha abaixo - conerter string pra int            
+         //tempNode->numero = roller.nome;
+         tempNode->next = listaScroller;
+         pushPop();
+         while (roller.nome != ","){            
+            pushPop();
+            if(roller.tipo == 2){
+               //Consertar linha abaixo - conerter string pra int
+               //listaScroller->numero = roller.nome;
+               listaScroller = listaScroller->next;               
+            }else{
+               erro = 1;
+               break;
+            }
+            pushPop();
+         }
+         listaScroller = NULL;
+         if(roller.nome != ";"){
+            erro = 1;            
+         }else{
+            pushPop();
+         }
+      }else{
+         erro = 1;
+      }
+   }else{
+      tempNode = NULL;
+   }   
+   
+   return tempNode;                
+};
+
+////////////////////////////////////////////////////////////////////////////////
 

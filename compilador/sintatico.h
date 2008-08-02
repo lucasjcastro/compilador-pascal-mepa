@@ -17,11 +17,17 @@
  * 
  * bloco* ASbloco(); -> Análise sintática de bloco
  * 
- * int isuline(char); -> 
+ * declaraRotulos* ASdeclaraRotulos(); -> Análise sintática de declaração de rótulos
  * 
  * void addtolist(string,line); -> 
  * 
  * 
+ *
+ *
+ *
+ *
+ *
+ *
  * 
  * void printlist(); -> 
  * 
@@ -48,8 +54,12 @@ public:
 	
 	listaIdentificadores* ASlistaIdentificadores();
 	bloco* ASbloco();
-	
-		
+	declaraRotulos* ASdeclaraRotulos();
+    /*defineTipos* ASdefineTipos();
+    declaraVariaveis* ASdeclaraVariaveis();
+    declaraSubrotinas* ASdeclaraSubrotinas();
+    comandoComposto* AScomandoComposto(); 
+	*/	
 private:
     hash tabelaHash;    
     std::list<tokentype> *lista;
