@@ -147,12 +147,12 @@ void hash::setHash(string palavra, string categoria){
    hashId = getHashNumba(palavra);  
       
    insert->next = hashTable[hashId];
-   hashTable[hashId] = insert;      
+   hashTable[hashId] = insert;   
 };
 
 ////////////////////////////////////////////////////////
 
-int hash::checkHash(string palavra){
+int hash::checkHash(string palavra, string categoria){
    hashCell *check;
    int hashId=0;
       
@@ -161,7 +161,7 @@ int hash::checkHash(string palavra){
       
    check = hashTable[hashId];
    while(check!=NULL){
-      if (check->getIdentificador() == palavra){return 1;}
+      if (check->getIdentificador() == palavra && check->getCategoria() == categoria){return 1;}
       else{check = check->next;}
    }   
    return 0;      

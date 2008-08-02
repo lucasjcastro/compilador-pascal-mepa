@@ -14,7 +14,7 @@
 class raiz{
    public:
       std::string nomePrograma;
-      class listaIdentificadores *listaIdentifica;
+      class listaIdentificadores *listaIdentificadores;
       class bloco *bloco;
 };
 
