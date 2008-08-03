@@ -4,7 +4,7 @@
 #include "tokentype.h"
 #include "arvore.h"
 
-using namespace std;
+//using namespace std;
 
 sintatico::sintatico()
 {
@@ -68,7 +68,8 @@ void sintatico::analisador_sintatico(){
 
    pushPop();   
    if(roller.nome == "program"){
-      pushPop();      
+      pushPop();
+      //se token for identificador
       if(roller.tipo == 1){
          // [check] Analisar se essa linha é necessária, e completar a configuração hash:
          tabelaHash.setHash(roller.nome, "procedimento");
@@ -110,7 +111,7 @@ void sintatico::analisador_sintatico(){
    std::cout << "Under construction. Keep out, MO-FOS!" << std::endl << std::endl;
    //system("pause");	
    
-};
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -240,7 +241,7 @@ defineTipos* sintatico::ASdefineTipos(){
 declaraVariaveis* sintatico::ASdeclaraVariaveis(){
   
    declaraVariaveis *tempNode, *listaScroller;
-   listaIdentificadores *listaIDScroller;   
+   listaIdentificadores *listaIDScroller;
    string holdType;      
       
    if(roller.nome == "var"){
@@ -252,7 +253,7 @@ declaraVariaveis* sintatico::ASdeclaraVariaveis(){
       }else{
          if(roller.nome == ":"){
             pushPop();
-            holdType = comparaTipo(roller.nome);            
+            holdType = comparaTipo(roller.nome);
             if(holdType == "erro"){
                erro = 1;
             }else{
@@ -260,7 +261,7 @@ declaraVariaveis* sintatico::ASdeclaraVariaveis(){
             }
          }else{
             erro = 1;
-         } 
+         }
          
          if(!erro){
             //alocar tipos aos identificadores na hash
@@ -515,4 +516,7 @@ parametrosFormais* sintatico::ASparametrosFormais(){
 ////////////////////////////////////////////////////////////////////////////////
 
 
-   
+comandoComposto* sintatico::AScomandoComposto(){
+	
+	//comandoComposto 
+}
