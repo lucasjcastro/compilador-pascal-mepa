@@ -519,17 +519,52 @@ parametrosFormais* sintatico::ASparametrosFormais(){
 comandoComposto* sintatico::AScomandoComposto(){
 	
 	comandoComposto *tempNode;
+	comandoComposto *listaScroller;
+	comandoComposto *listaScroller2;
 	
 	if(roller.nome == "begin"){
 		pushPop();
-		(*tempNode).comando = AScomando();
+		if(!erro){
+			(*tempNode).comando = AScomando();
+		}
+		else{
+			break;
+		}
 		if(roller.nome == "{"){
-			pushPop();
-			if(roller.nome == ";"){
+			//laço pra colocar quantos comandos forem necessários na árvore
+			listaScroller = tempNode;
+			do{
 				pushPop();
+				if(!erro){
+					(*listaScroller).comando = AScomando();
+					(*listaScroller).next = NULL;
+					pushPop();
+				}
+				else{
+					break;
+				}
+				if(roller.nome == ";"){
+					pushPop();
+					if(!erro){ (*listaScroller2).comando = AScomando() } else { break; }
+					(*listaScroller2).next == NULL;
+					(*listaScroller).next == (*listaScroller2);
+					(*listaScroller) = (*listaScroller2);
+					pushPop();
+				}
+				else{
+					break;
+				}
+			}while(roller.nome == ";");
+			if(roller.name == "}"){
+				if((roller.name == "end"){
+					return tempNode;
+				}
+				else{
+					erro == 1;
+				}
 			}
 			else{
-				erro = 1;
+				erro == 1;
 			}
 		}
 		else{
