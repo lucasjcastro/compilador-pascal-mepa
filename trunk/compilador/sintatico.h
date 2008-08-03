@@ -48,26 +48,33 @@ public:
 	sintatico();
 	virtual ~sintatico();
 	
+	string comparaTipo(string compare);
 	void pushPop();                          
 	void loadList(std::list<tokentype> loadUp);
 	void analisador_sintatico();
 	
+	
 	listaIdentificadores* ASlistaIdentificadores();
 	bloco* ASbloco();
-	declaraRotulos* ASdeclaraRotulos();
-    /*defineTipos* ASdefineTipos();
+	//declaraRotulos* ASdeclaraRotulos();
+    //defineTipos* ASdefineTipos();
     declaraVariaveis* ASdeclaraVariaveis();
     declaraSubrotinas* ASdeclaraSubrotinas();
-    comandoComposto* AScomandoComposto(); 
-	*/	
+    //comandoComposto* AScomandoComposto(); 
+    
+    parametrosFormais* ASparametrosFormais();
+    
+    
+		
 private:
     hash tabelaHash;    
     std::list<tokentype> *lista;
     raiz carvalho;
     
     int nivelLexico,      // Variável guardando o nível léxico
-        erro;             // Variável setada quando qualquer erro for encontrado no programa, encerrando sua execução   
-	tokentype roller;     // tokentype que receberá o token mais à esquerda na lista para análise
+        erro,             // Variável setada quando qualquer erro for encontrado no programa, encerrando sua execução   
+	    desloca;
+    tokentype roller;     // tokentype que receberá o token mais à esquerda na lista para análise
 };
 
 #endif /*SINTATICO_H_*/

@@ -45,30 +45,32 @@ class defineTipos{
       class defineTipos *next;
 };
 
-class defineTipo{
+// Desnecessária
+/*class defineTipo{
    public:
       std::string identificador;
       class tipo *tipo;
 };
+*/
 
-class tipo{
+// Desnecessária
+/*class tipo{
    public:
       std::string identificador;
-      class indice *indice;
-      class tipo *tipoArray;
-};
+};*/
 
-class indice{                                             // Na verdade, uma *lista* de indices, para uso em arrays. 
+// Desnecessária
+/*class indice{                                             // Na verdade, uma *lista* de indices, para uso em arrays. 
    public:                                                //o ponteiro presente é usado para o caso de haver mais de 
       int numero1;                                        //um índice no array. 
       int numero2;
       indice *next;    
 };
-
+*/
 class declaraVariaveis{                                   // "Parte de declarações de variáveis" 
    public:                                                //e "declarações de variáveis" foram   
       class listaIdentificadores *listaIdentificadores;   //fundidas.
-      class tipo *tipoIdentificadores;
+      std::string tipoIdentificadores;
       class declaraVariaveis *next;
 };
 
@@ -76,7 +78,6 @@ class declaraSubrotinas{
    public:
       class declaraProcedimento *declaraProcedimento;
       class declaraFuncao *declaraFuncao;
-      class declaraSubrotinas *next;
 };
 
 class declaraProcedimento{
@@ -84,6 +85,7 @@ class declaraProcedimento{
       std::string identificador;
       class parametrosFormais *parametrosFormais;
       class bloco *bloco;
+      class declaraProcedimento *next;
 };
 
 class declaraFuncao{
@@ -92,18 +94,14 @@ class declaraFuncao{
       class parametrosFormais *parametrosFormais;
       std::string identificador;
       class bloco *bloco;
+      class declaraFuncao *next;
 };
 
 class parametrosFormais{
    public:
-      class secaoParametrosFormais *secaoParametrosFormais;
-      class parametrosFormais *next;
-};
-       
-class secaoParametrosFormais{
-   public:
       class listaIdentificadores *listaIdentificadores;
       std::string identificador12;
+      class parametrosFormais *next;
 };
 
 class comandoComposto{
