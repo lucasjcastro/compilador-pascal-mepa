@@ -39,7 +39,7 @@ string sintatico::comparaTipo(string compare){
    if(compare == "integer"){
       return "integer";
    }else if(compare == "char"){ 
-       return "char"
+       return "char";
    }else if(compare == "boolean"){
        return "boolean";
    }else if(compare == "real"){
@@ -252,7 +252,7 @@ declaraVariaveis* sintatico::ASdeclaraVariaveis(){
       }else{
          if(roller.nome == ":"){
             pushPop();
-            holdType = comparaTipo(string compare);            
+            holdType = comparaTipo(roller.nome);            
             if(holdType == "erro"){
                erro = 1;
             }else{
@@ -448,7 +448,7 @@ declaraSubrotinas* sintatico::ASdeclaraSubrotinas(){
 
 parametrosFormais* sintatico::ASparametrosFormais(){
                    
-   parametrosFormais *tempNode, listaScroller;
+   parametrosFormais *tempNode, *listaScroller;
    listaIdentificadores *listaIDScroller;
    int deslocamentoAux=0;
    string holdTipo;
@@ -464,10 +464,11 @@ parametrosFormais* sintatico::ASparametrosFormais(){
                       
                // Inserindo valores de deslocamento nos identificadores coletados 
                //anteriormente.                      
-               listaIDScroller = listaScroller->listaIdentificadores
+               listaIDScroller = listaScroller->listaIdentificadores;
                deslocamentoAux = (desloca*-1)-3;
                for(; deslocamentoAux <= -3; deslocamentoAux++){
                   tabelaHash.setDeslocamento(listaIDScroller->nome, deslocamentoAux);
+                  listaIDScroller = listaIDScroller->next;
                }
                if(roller.nome == ":"){
                   pushPop();
@@ -480,7 +481,7 @@ parametrosFormais* sintatico::ASparametrosFormais(){
                      tabelaHash.setNivel(roller.nome, nivel); 
                      */
                      
-                     listaIDScroller->identificador12 = roller.nome;
+                     listaScroller->identificador12 = roller.nome;
                      pushPop();                
                      listaScroller = listaScroller->next;  
                   }else{
@@ -498,7 +499,7 @@ parametrosFormais* sintatico::ASparametrosFormais(){
             erro = 1;
          }
       }while(roller.nome == ";");
-      if(roller->nome == ")"){
+      if(roller.nome == ")"){
          pushPop();      
       }else{
          erro = 1;
