@@ -518,5 +518,25 @@ parametrosFormais* sintatico::ASparametrosFormais(){
 
 comandoComposto* sintatico::AScomandoComposto(){
 	
-	//comandoComposto 
+	comandoComposto *tempNode;
+	
+	if(roller.nome == "begin"){
+		pushPop();
+		(*tempNode).comando = AScomando();
+		if(roller.nome == "{"){
+			pushPop();
+			if(roller.nome == ";"){
+				pushPop();
+			}
+			else{
+				erro = 1;
+			}
+		}
+		else{
+			erro == 1;
+		}
+	}
+	else{
+		erro = 1;
+	}
 }
