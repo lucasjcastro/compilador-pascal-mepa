@@ -11,14 +11,14 @@ int main(int argc, char* argv[]){
     std::string filename = argv[1];
     
 	lexico comp;
-	sintatico run;
+	//sintatico testoe;
 	
 	comp.analisador_lexico(filename);
 	//comp.printerror();
-	//comp.printlist();
+	comp.printlist();
 	//comp.printtype();
-	run.loadList(comp.getLista());
-	run.analisador_sintatico();
+	//testoe = new lista(comp.getLista());
+	//testoe.analisador_sintatico();
 	
 	return 0;
 }
