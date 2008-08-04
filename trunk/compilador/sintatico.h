@@ -63,6 +63,7 @@ public:
     declaraSubrotinas* ASdeclaraSubrotinas();
     comandoComposto* AScomandoComposto(); 
     comando* AScomando();
+    comandoSemrotulo* AScomandoSemrotulo();
     
     parametrosFormais* ASparametrosFormais();
     atribuicao* ASatribuicao();
@@ -73,6 +74,9 @@ public:
     termo* AStermo();
     fator* ASfator();
     chamadaFuncao* ASchamadaFuncao();
+    comandoRepetitivo* AScomandoRepetitivo();
+    comandoCondicional* AScomandoCondicional();
+    chamadaProcedimento* ASchamadaProcedimento();
     
 		
 private:

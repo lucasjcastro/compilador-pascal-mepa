@@ -590,17 +590,21 @@ comando* sintatico::AScomando(){
 atribuicao* sintatico::ASatribuicao(){
    
    atribuicao *tempNode;
+   string checkCat;
    
-   tempNode->variavel = ASvariavel();
-   if(roller.nome == ":"){
-      pushPop();
-      if(roller.nome == "="){
-         tempNode->expressao = ASexpressao();         
+   checkCat = tabelaHash.getCategoria(roller.nome);
+   if(checkCat == "variavel"){
+      tempNode->variavel = ASvariavel();
+      if(roller.nome == ":"){
+         pushPop();
+         if(roller.nome == "="){
+            tempNode->expressao = ASexpressao();         
+         }else{
+            erro = 1;            
+         }
       }else{
-         erro = 1;            
+         erro = 1;
       }
-   }else{
-      erro = 1;
    }
    
    return tempNode;
@@ -808,6 +812,94 @@ chamadaFuncao* sintatico::ASchamadaFuncao(){
 
 ////////////////////////////////////////////////////////////////////////////////
 
-comando* AScomando(){
-	
+comandoRepetitivo* sintatico::AScomandoRepetitivo(){
+   comandoRepetitivo *tempNode;
+   
+   if(roller.nome == "while"){
+      pushPop();
+      tempNode->expressao = ASexpressao();
+      if(!erro && roller.nome == "do"){
+         pushPop();
+         tempNode->comandoSemrotulo = AScomandoSemrotulo();         
+      }
+   }else{
+      erro = 1;
+   }
+      
+   return tempNode;   
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+comandoCondicional* sintatico::AScomandoCondicional(){
+   comandoCondicional *tempNode;
+   
+   if(roller.nome == "if"){
+      pushPop();
+      tempNode->expressao = ASexpressao();
+      if(!erro && roller.nome == "then"){
+         pushPop();
+         tempNode->entao = AScomandoSemrotulo();
+         if(!erro && roller.nome == "else"){
+            pushPop();
+            tempNode->senao = AScomandoSemrotulo();
+         }            
+      }
+   }
+   
+   return tempNode;
+};
+
+////////////////////////////////////////////////////////////////////////////////
+     
+chamadaProcedimento* sintatico::ASchamadaProcedimento(){
+   chamadaProcedimento *tempNode;
+   string checkCat;
+   
+   tempNode->identificador = roller.nome;
+   pushPop();
+   if(roller.nome == "("){
+      pushPop();
+      tempNode->listaExpressoes = ASlistaExpressoes();
+      if (roller.nome != ")"){
+         erro = 1;
+      }        
+   }   
+   
+   return tempNode;                     
+};
+                          
+////////////////////////////////////////////////////////////////////////////////
+
+comandoSemrotulo* sintatico::AScomandoSemrotulo(){
+   comandoSemrotulo *tempNode;
+   string checkCat;
+   
+   tempNode->atribuicao = NULL;
+   tempNode->chamadaProcedimento = NULL;
+   tempNode->comandoComposto = NULL;
+   tempNode->comandoCondicional = NULL;
+   tempNode->comandoRepetitivo = NULL;
+      
+   checkCat = tabelaHash.getCategoria(roller.nome);               
+   if(checkCat == "variavel"){
+      tempNode->atribuicao = new atribuicao();
+      tempNode->atribuicao = ASatribuicao();               
+   }else if(checkCat == "procedimento"){
+      tempNode->chamadaProcedimento = new chamadaProcedimento;
+      tempNode->chamadaProcedimento = ASchamadaProcedimento();         
+   }else if(roller.nome == "begin"){
+      tempNode->comandoComposto = new comandoComposto();
+      tempNode->comandoComposto = AScomandoComposto();         
+   }else if(roller.nome == "if"){
+      tempNode->comandoCondicional = new comandoCondicional();
+      tempNode->comandoCondicional = AScomandoCondicional();         
+   }else if(roller.nome == "while"){
+      tempNode->comandoRepetitivo = new comandoRepetitivo();      
+      tempNode->comandoRepetitivo = AScomandoRepetitivo();      
+   }else{
+      erro = 1;
+   }
+                  
+   return tempNode;               
 };

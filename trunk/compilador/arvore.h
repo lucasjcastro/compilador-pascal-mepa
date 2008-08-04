@@ -126,7 +126,7 @@ class comandoSemrotulo{
    public:
       class atribuicao *atribuicao;
       class chamadaProcedimento *chamadaProcedimento;
-      class desvio *desvio;
+      //class desvio *desvio;                              // Desnecessário
       class comandoComposto *comandoComposto;
       class comandoCondicional *comandoCondicional;
       class comandoRepetitivo *comandoRepetitivo;
