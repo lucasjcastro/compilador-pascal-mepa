@@ -112,7 +112,7 @@ class comandoComposto{
 
 class comando{
    public:
-      class numero *numero;
+      //class numero *numero;                              // Desnecessário
       class comandoSemrotulo *comandoSemrotulo;
 };
 
