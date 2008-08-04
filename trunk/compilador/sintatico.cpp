@@ -61,6 +61,27 @@ string sintatico::comparaTipo(string compare){
 
 ////////////////////////////////////////////////////////////////////////////////
 
+string sintatico::comparaRelacao(string compare){
+      
+   if(compare == "="){
+      return "=";
+   }else if(compare == "<>"){ 
+       return "<>";
+   }else if(compare == "<"){
+       return "<";
+   }else if(compare == "<="){
+       return "<=";
+   }else if(compare == ">"){
+       return ">";
+   }else if(compare == ">="){
+       return ">=";
+   }else{
+      return "erro";
+   }
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
 //  obs.: o comando "pushPop()" serve para passar para a próxima palavra 
 // da lista recebida do léxico.
 
@@ -85,27 +106,22 @@ void sintatico::analisador_sintatico(){
                   pushPop();                  
                   if(roller.nome == ";"){    
                      pushPop();              
-                     carvalho.bloco = ASbloco();
-                     if(erro){
-                        // [check] imprimir erro, interromper programa
-                     }else{
-                        // [check] imprimir sucesso?
-                     }       
+                     carvalho.bloco = ASbloco();       
                   }else{
-                     // [check] imprimir erro, interromper programa
+                     erro = 1;
                   }
                }else{
-                  // [check] imprimir erro, interromper programa
+                  erro =1;      
                }
             }
          }else{
-            // [check] imprimir erro, interromper programa
+            erro = 1;
          }                 
       }else{
-         // [check] imprimir erro, interromper programa
+         erro = 1;
       }                
    }else{
-      // [check] imprimir erro, interromper programa
+      erro = 1;
    }
       
    std::cout << "Under construction. Keep out, MO-FOS!" << std::endl << std::endl;
@@ -167,11 +183,10 @@ bloco* sintatico::ASbloco(){
    //tempNode->defineTipos = ASdefineTipos();          // desnecessária
    tempNode->variaveis = ASdeclaraVariaveis();
    tempNode->subrotinas = ASdeclaraSubrotinas();
-   //tempNode->comandoComposto = AScomandoComposto();   
-   
-   if(erro){
-      // [check] providencias de erro serão tomadas no método que chamou este.
+   if (!erro){
+      tempNode->comandoComposto = AScomandoComposto();
    }   
+      
    return tempNode;   
 };
 
@@ -515,7 +530,6 @@ parametrosFormais* sintatico::ASparametrosFormais(){
    
 ////////////////////////////////////////////////////////////////////////////////
 
-
 comandoComposto* sintatico::AScomandoComposto(){
 	
 	comandoComposto *tempNode;
@@ -527,41 +541,273 @@ comandoComposto* sintatico::AScomandoComposto(){
 	if(roller.nome == "begin"){
 		pushPop();
 		(*tempNode).comando = AScomando();
-		(*tempNode).next == NULL;
-		listaScroller = tempNode;
+		//(*tempNode).next == NULL;                      // AQUI,OH!
+		listaScroller = tempNode->next;
 		if(!erro){
 			pushPop();
-			if(roller.nome == ";"){
-				while(roller.nome == ";"){
-					pushPop();
-					(*listaScroller2).comando = AScomando();
-					if(!erro){
-						(*listaScroller2).next = NULL;
-						(*listaScroller).next = listaScroller2;
-					}
-					else{
-						break;
-					}
-					pushPop();
-					listaScroller = listaScroller2;
-				}
+			//if(roller.nome == ";"){
+			while(roller.nome == ";"){
+			   pushPop();
+			   (*listaScroller).comando = AScomando();
+			   if(!erro){
+			      //(*listaScroller2).next = NULL;
+				  //(*listaScroller).next = listaScroller2;
+				  listaScroller = listaScroller->next;
+               }else{
+			      break;
+			   }
+			   pushPop();
+			   //listaScroller = listaScroller2;
 			}
+			/*}
 			else{
-				if(roller.nome == "end"){
-					return tempNode;
-				}else{
-					erro == 1;
-				}
+			if(roller.nome == "end"){
+			   return tempNode;
+			}else{
+			   erro = 1;
 			}
+			}*/
+			if(roller.nome != "end"){
+               erro = 1;
+            }
+            listaScroller = NULL;
 		}
 	}
 	else{
-		erro == 1;
+	   erro == 1;
 	}
 }
+
+////////////////////////////////////////////////////////////////////////////////   
+   
+comando* sintatico::AScomando(){
+         
+         
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+atribuicao* sintatico::ASatribuicao(){
+   
+   atribuicao *tempNode;
+   
+   tempNode->variavel = ASvariavel();
+   if(roller.nome == ":"){
+      pushPop();
+      if(roller.nome == "="){
+         tempNode->expressao = ASexpressao();         
+      }else{
+         erro = 1;            
+      }
+   }else{
+      erro = 1;
+   }
+   
+   return tempNode;
+   
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+variavel* sintatico::ASvariavel(){
+   variavel *tempNode;
+   string checkCat;
+   
+   tempNode->listaExpressoes = NULL;
+      
+   checkCat = tabelaHash.getCategoria(roller.nome);
+   if(checkCat == "variavel"){
+      tempNode->identificador = roller.nome;
+      pushPop();
+      
+      // [check] Necessária?
+      /*
+      tempNode->listaExpressoes = new listaExpressoes();
+      tempNode->listaExpressoes = ASlistaExpressoes();
+      if(erro){
+         // [check] Providencias de parada
+      }
+      
+      */
+   } 
+   
+   return tempNode;        
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+listaExpressoes* sintatico::ASlistaExpressoes(){
+   listaExpressoes *tempNode, *listaScroller;                 
+   
+   tempNode->expressao = ASexpressao();
+   if(!vazio){      
+      listaScroller = tempNode->next;
+      pushPop();
+      while(roller.nome == ","){
+         listaScroller->expressao = ASexpressao();
+         if(vazio){
+            break;            
+         }else{
+            pushPop();
+         }
+         listaScroller = listaScroller->next;
+      }
+   }
+   listaScroller = NULL;
+   
+   return tempNode;                
+}; 
+   
+////////////////////////////////////////////////////////////////////////////////
+
+expressao* sintatico::ASexpressao(){
+   expressao *tempNode;
+   
+   tempNode->primeiraSimples = ASexpressaoSimples();
+   if(!vazio){                                             // Se a primeira expressão tiver erro, o método simplesmente se encerrará                      
+      if(comparaRelacao(roller.nome) != "erro"){          // Sair do método sem a segunda parte da expressão é aceitável, por isso não propaga erro
+         tempNode->relacao = roller.nome;
+         pushPop();
+         tempNode->segundaSimples = ASexpressaoSimples();
+      }
+   }else{
+      erro = 1;
+   }
+   
+   return tempNode;
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+expressaoSimples* sintatico::ASexpressaoSimples(){
+   expressaoSimples *tempNode, *listaScroller;
+   
+   tempNode = listaScroller;   
+   if(roller.nome == "+" || roller.nome == "-"){
+      listaScroller->operador = roller.nome;
+      pushPop();
+   }else{
+      listaScroller->operador = "nulo";
+   }   
+   listaScroller->termo = AStermo();
+   if(!erro){
+      listaScroller = listaScroller->next;
+      while(roller.nome == "+" || roller.nome == "-" || roller.nome == "or"){
+         listaScroller->operador = roller.nome;
+         pushPop();
+         listaScroller->termo = AStermo();
+         if(erro){
+            break;
+         }else{
+            listaScroller = listaScroller->next;
+            pushPop();
+         }
+      }   
+   }
+   
+   return tempNode;
+};
+   
+////////////////////////////////////////////////////////////////////////////////
+
+termo* sintatico::AStermo(){
+   termo *tempNode, *listaScroller;          
+   
+   tempNode = listaScroller;   
+   listaScroller->fator = ASfator();
+   if(!vazio){
+      while(!erro && (roller.nome == "*" || roller.nome == "div" || roller.nome == "and")){
+         pushPop();
+         listaScroller->conector = roller.nome;
+         listaScroller = listaScroller->next;
+         listaScroller->fator = ASfator();                     
+      }
+      listaScroller->next = NULL;      
+   }
+   
+   return tempNode;      
+};   
+
+////////////////////////////////////////////////////////////////////////////////
+
+// Fator trabalha de maneira especial com o erro, devido à sua complexidade. Ao invés
+//de receber o erro e cair fora, ele o zera e continua testando as outras possibilidades. 
+//Isso acontece devido a testes quase ambíguos existentes dentro da estrutura de <fator>.
+
+fator* sintatico::ASfator(){
+   fator *tempNode;
+   string holdCat;
+   
+   tempNode->negacao = "nulo";   
+   tempNode->numero = "nulo";
+   tempNode->abreChave = "nulo";
+   tempNode->fechaChave = "nulo";
+   
+   tempNode->expressao = NULL;
+   tempNode->fator = NULL;
+   tempNode->variavel = NULL;
+   tempNode->chamadaFuncao = NULL;
+   
+   if(roller.nome == "not"){
+      tempNode->fator = new fator();
+      
+      tempNode->negacao = "not";
+      pushPop();
+      tempNode->fator = ASfator();
+      
+   }else if(roller.tipo == 2){                     //CHECK   
+      tempNode->numero = roller.nome;
+      pushPop();
+      
+   }else if(roller.nome == "("){                   //CHECK
+      tempNode->expressao = new expressao();
+                  
+      tempNode->abreChave = roller.nome;
+      pushPop();
+      tempNode->expressao = ASexpressao();
+      if(!erro && roller.nome == ")"){
+        tempNode->fechaChave = roller.nome;
+        pushPop();
+      }         
+      
+   }else{
+      holdCat = tabelaHash.getCategoria(roller.nome);
+      if(holdCat == "variavel"){
+         tempNode->variavel = new variavel();      
+         tempNode->variavel = ASvariavel();
+      }else if(holdCat == "funcao"){
+         tempNode->chamadaFuncao = new chamadaFuncao();      
+         tempNode->chamadaFuncao = ASchamadaFuncao();           
+      }else{
+         erro = 1;
+      }
+   }   
+   return tempNode;    
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+chamadaFuncao* sintatico::ASchamadaFuncao(){
+   chamadaFuncao *tempNode;
+   string checkCat;
+   
+   checkCat = tabelaHash.getCategoria(roller.nome);
+   if(checkCat == "funcao"){
+      tempNode->identificador = roller.nome;
+      pushPop();
+      if(roller.nome == "("){
+         pushPop();
+         tempNode->listaExpressoes = ASlistaExpressoes();
+      }   
+   }else{
+      erro = 1;
+   }
+   
+   return tempNode;               
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 
 comando* AScomando(){
 	
-}
+};

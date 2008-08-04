@@ -177,8 +177,8 @@ class expressao{
 
 class expressaoSimples{
    public:
-      char operador;
-      class termo *primeiroTermo;
+      std::string operador;
+      class termo *termo;
       class expressaoSimples *next;
 };
 
@@ -186,7 +186,7 @@ class termo{                                //  Originalmente a classe tem três 
    public:                                  // fator, um conector (*|div|and) e outro fator.
       class fator *fator;                   // Como vários deles podem ser conectados em fila,
       std::string conector;                 // vamos considerar apenas os dois elementos presentes,
-      class termo *sequencia;               // e o terceiro estará na classe "termo *sequencia". 
+      class termo *next;                    // e o terceiro estará na classe "termo *next". 
 };
 
 class fator{                                // O atributo 'numero' foi passado para o final para    
@@ -195,19 +195,22 @@ class fator{                                // O atributo 'numero' foi passado p
       class chamadaFuncao *chamadaFuncao;
       class expressao *expressao;
       class fator *fator;
-      int numero;
+      std::string negacao,      
+                 numero,
+                 abreChave,
+                 fechaChave;      
 };
 
 class variavel{
    public:
       std::string identificador;
-      class listaExpressao *listaExpressao;
+      class listaExpressoes *listaExpressoes;
 };
 
 class chamadaFuncao{
    public:
       std::string identificador;
-      class listaExpressao *listaExpressao;
+      class listaExpressoes *listaExpressoes;
 };
 
 #endif
