@@ -22,14 +22,25 @@ sintatico::~sintatico()
 ////////////////////////////////////////////////////////////////////////////////
 
 void sintatico::loadList(std::list<tokentype> loadUp){
-   lista = &loadUp;
+   tokentype testim;
+	
+   testim.nome = "fim";
+   testim.tipo = 0;
+   testim.linha = 0;
+   testim.erro = 0;   
+   
+   lista = loadUp;
+   lista.push_back(testim);   
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void sintatico::pushPop(){  
-  roller = lista->front();  
-  lista->pop_front();
+void sintatico::pushPop(){       
+  roller = lista.front();
+  
+  if(roller.nome != "fim"){
+     lista.pop_front();  
+  }
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -88,15 +99,14 @@ string sintatico::comparaRelacao(string compare){
 void sintatico::analisador_sintatico(){
 
    int inutil;     
-
-   pushPop();   
-   if(roller.nome == "program"){
-      pushPop();
+   
+   pushPop();      
+   if(roller.nome == "program"){      
+      pushPop();  
       //se token for identificador
       if(roller.tipo == 1){
-         // [check] Analisar se essa linha é necessária, e completar a configuração hash:
-         tabelaHash.setHash(roller.nome, "procedimento");
-                  
+         // [check] Analisar se essa linha é necessária, e completar a configuração hash:            
+         tabelaHash.setHash(roller.nome, "procedimento");                  
          pushPop();
          if(roller.nome == "("){
             pushPop();
@@ -127,13 +137,15 @@ void sintatico::analisador_sintatico(){
    }
       
    if(erro){
-      cout << "A palavra que deu treta foi '" << roller.nome << "', sacou?" << endl;
+      cout << "A palavra que deu treta foi '" << roller.nome << "', na linha " << roller.linha << ".";      
+      cin >> inutil;
+   }else{
+      cout << "No errors, congratxus!";
       cin >> inutil;
    }
       
-   std::cout << "Under construction. Keep out, MO-FOS!" << std::endl << std::endl;
-   //system("pause");	
-   
+   //std::cout << "Under construction. Keep out, MO-FOS!" << std::endl << std::endl;
+   //system("pause");	   
 }
 
 ////////////////////////////////////////////////////////////////////////////////

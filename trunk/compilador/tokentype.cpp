@@ -2,8 +2,8 @@
 
 tokentype::tokentype()
 {
-}
+};
 
 tokentype::~tokentype()
 {
-}
+};

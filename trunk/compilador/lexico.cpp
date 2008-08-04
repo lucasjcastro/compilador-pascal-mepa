@@ -30,8 +30,10 @@ void lexico::analisador_lexico(std::string filename){
 	int tipo = 0;
 	int erro = 0;
 	int comment = 0;
+	int cont = 0;
+		
 	std::ifstream source(filename.c_str());
-	while(!source.eof()){
+	while(cont < filename.length()){
 		buffer = source.get();
 		if(comment == 1){ //BLOCO PARA IGNORAR COMENTÁRIOS
 			if(token.empty()){
@@ -51,9 +53,11 @@ void lexico::analisador_lexico(std::string filename){
 				tipo = 0;
 				erro = 0;
 			}
-		}
-		else{
-			if(ischar(buffer)){ //TESTE SE BUFFER É CARACTERE
+		}		
+        else{
+			cout << "Checkpoint" << cont << endl;
+     	system("pause");
+            if(ischar(buffer)){ //TESTE SE BUFFER É CARACTERE
 				if(token.empty()){
 					tipo = 1;
 					token.push_back(buffer);
@@ -170,6 +174,7 @@ void lexico::analisador_lexico(std::string filename){
 				token.push_back(buffer);
 			}
 		}
+		cont++;
 	}
 }
 

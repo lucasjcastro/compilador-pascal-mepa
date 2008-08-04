@@ -81,7 +81,7 @@ public:
 		
 private:
     hash tabelaHash;    
-    std::list<tokentype> *lista;
+    std::list<tokentype> lista;
     raiz carvalho;
     
     int nivelLexico,      // Variável guardando o nível léxico
