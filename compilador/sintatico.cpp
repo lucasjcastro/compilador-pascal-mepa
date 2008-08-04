@@ -87,6 +87,8 @@ string sintatico::comparaRelacao(string compare){
 
 void sintatico::analisador_sintatico(){
 
+   int inutil;     
+
    pushPop();   
    if(roller.nome == "program"){
       pushPop();
@@ -122,6 +124,11 @@ void sintatico::analisador_sintatico(){
       }                
    }else{
       erro = 1;
+   }
+      
+   if(erro){
+      cout << "A palavra que deu treta foi '" << roller.nome << "', sacou?" << endl;
+      cin >> inutil;
    }
       
    std::cout << "Under construction. Keep out, MO-FOS!" << std::endl << std::endl;
