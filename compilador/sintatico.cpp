@@ -578,13 +578,6 @@ comandoComposto* sintatico::AScomandoComposto(){
 	}
 }
 
-////////////////////////////////////////////////////////////////////////////////   
-   
-comando* sintatico::AScomando(){
-         
-         
-};
-
 ////////////////////////////////////////////////////////////////////////////////
 
 atribuicao* sintatico::ASatribuicao(){
@@ -812,7 +805,9 @@ chamadaFuncao* sintatico::ASchamadaFuncao(){
 
 ////////////////////////////////////////////////////////////////////////////////
 
-comandoRepetitivo* sintatico::AScomandoRepetitivo(){
+comando* AScomando(){
+	comando *tempNode;
+	comandoRepetitivo* sintatico::AScomandoRepetitivo(){
    comandoRepetitivo *tempNode;
    
    if(roller.nome == "while"){
