@@ -17,7 +17,7 @@ int main(int argc, char* argv[]){
 	//comp.printerror();
 	comp.printlist();
 	//comp.printtype();
-	//testoe = new lista(comp.getLista());
+	//testoe.loadList(comp.getLista());
 	//testoe.analisador_sintatico();
 	
 	return 0;
