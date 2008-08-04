@@ -49,6 +49,7 @@ public:
 	virtual ~sintatico();
 	
 	string comparaTipo(string compare);
+	string comparaRelacao(string compare);
 	void pushPop();                          
 	void loadList(std::list<tokentype> loadUp);
 	void analisador_sintatico();
@@ -60,11 +61,18 @@ public:
     //defineTipos* ASdefineTipos();
     declaraVariaveis* ASdeclaraVariaveis();
     declaraSubrotinas* ASdeclaraSubrotinas();
-    //comandoComposto* AScomandoComposto(); 
+    comandoComposto* AScomandoComposto(); 
+    comando* AScomando();
     
     parametrosFormais* ASparametrosFormais();
-    comandoComposto* AScomandoComposto();
-    comando AScomando();
+    atribuicao* ASatribuicao();
+    variavel* ASvariavel();
+    listaExpressoes* ASlistaExpressoes();
+    expressao* ASexpressao();
+    expressaoSimples* ASexpressaoSimples();
+    termo* AStermo();
+    fator* ASfator();
+    chamadaFuncao* ASchamadaFuncao();
     
 		
 private:
@@ -74,7 +82,8 @@ private:
     
     int nivelLexico,      // Variável guardando o nível léxico
         erro,             // Variável setada quando qualquer erro for encontrado no programa, encerrando sua execução   
-	    desloca;
+	    vazio,            // Quando uma expressão não foi encontrada, mas pode não ser essencial para a que vem logo acima
+        desloca;
     tokentype roller;     // tokentype que receberá o token mais à esquerda na lista para análise
 };
 
