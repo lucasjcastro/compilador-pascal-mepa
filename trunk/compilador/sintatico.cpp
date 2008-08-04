@@ -521,57 +521,45 @@ comandoComposto* sintatico::AScomandoComposto(){
 	comandoComposto *tempNode;
 	comandoComposto *listaScroller;
 	comandoComposto *listaScroller2;
+
+	int exec = 0;
 	
 	if(roller.nome == "begin"){
 		pushPop();
+		(*tempNode).comando = AScomando();
+		(*tempNode).next == NULL;
+		listaScroller = tempNode;
 		if(!erro){
-			(*tempNode).comando = AScomando();
-		}
-		else{
-			break;
-		}
-		if(roller.nome == "{"){
-			//laço pra colocar quantos comandos forem necessários na árvore
-			listaScroller = tempNode;
-			do{
-				pushPop();
-				if(!erro){
-					(*listaScroller).comando = AScomando();
-					(*listaScroller).next = NULL;
+			pushPop();
+			if(roller.nome == ";"){
+				while(roller.nome == ";"){
 					pushPop();
-				}
-				else{
-					break;
-				}
-				if(roller.nome == ";"){
+					(*listaScroller2).comando = AScomando();
+					if(!erro){
+						(*listaScroller2).next = NULL;
+						(*listaScroller).next = listaScroller2;
+					}
+					else{
+						break;
+					}
 					pushPop();
-					if(!erro){ (*listaScroller2).comando = AScomando() } else { break; }
-					(*listaScroller2).next == NULL;
-					(*listaScroller).next == (*listaScroller2);
-					(*listaScroller) = (*listaScroller2);
-					pushPop();
-				}
-				else{
-					break;
-				}
-			}while(roller.nome == ";");
-			if(roller.name == "}"){
-				if((roller.name == "end"){
-					return tempNode;
-				}
-				else{
-					erro == 1;
+					listaScroller = listaScroller2;
 				}
 			}
 			else{
-				erro == 1;
+				if(roller.nome == "end"){
+					return tempNode;
+				}else{
+					erro == 1;
+				}
 			}
-		}
-		else{
-			erro == 1;
 		}
 	}
 	else{
-		erro = 1;
+		erro == 1;
 	}
+}
+
+comando* AScomando(){
+	
 }
