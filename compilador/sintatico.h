@@ -63,7 +63,8 @@ public:
     //comandoComposto* AScomandoComposto(); 
     
     parametrosFormais* ASparametrosFormais();
-    
+    comandoComposto* AScomandoComposto();
+    comando AScomando();
     
 		
 private:
