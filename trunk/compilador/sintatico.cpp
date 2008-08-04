@@ -578,6 +578,19 @@ comandoComposto* sintatico::AScomandoComposto(){
 	}
 }
 
+<<<<<<< .mine
+////////////////////////////////////////////////////////////////////////////////   
+   
+comando* sintatico::AScomando(){
+   comando *tempNode;
+   
+   tempNode->comandoSemrotulo = AScomandoSemrotulo();
+            
+   return tempNode;      
+};
+
+=======
+>>>>>>> .r21
 ////////////////////////////////////////////////////////////////////////////////
 
 atribuicao* sintatico::ASatribuicao(){
